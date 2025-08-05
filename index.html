@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miele di Contra</title>
+    <meta name="description" content="Scopri il nostro miele millefiori artigianale prodotto con passione. Miele biologico di alta qualità, direttamente dalle nostre api.">
+    <meta name="keywords" content="miele, miele artigianale, miele biologico, miele millefiori, produzione miele, api, miele locale">
+    <link rel="stylesheet" href="css/style.css" id="main-css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/fav.png">
+</head>
+<body>
+<div class="wrapper">
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><i class="fas fa-bee"></i> Miele di Contra</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#prodotti" class="nav-link">Il Nostro Miele</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#chi-siamo" class="nav-link">Chi Siamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contatti" class="nav-link">Contatti</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Miele di Contra</h1>
+                <p>Scopri il gusto del nostro miele millefiori artigianale, prodotto dalle nostre api</p>
+                <a href="#prodotti" class="cta-button">Scopri il Nostro Miele</a>
+            </div>
+        </section>
+
+        <!-- Prodotti Section -->
+        <section id="prodotti" class="prodotti">
+            <div class="container">
+                <h2>Il nostro miele</h2>
+                <p class="section-subtitle">Miele di qualità, prodotto con metodi tradizionali</p>
+                
+                <div class="prodotto-single">
+                    <div class="prodotto-image-large">
+                        <img src="images/product.png" alt="Miele Millefiori" loading="lazy">
+                    </div>
+                    <div class="prodotto-details">
+                        <h3>Miele Millefiori Artigianale</h3>
+                        <p class="prodotto-description">
+                            Il nostro miele millefiori è prodotto da api che raccolgono nettare da fiori selvatici locali, dando vita a un miele dal sapore ricco e aromatico, con note floreali che cambiano ogni anno.
+                        </p>
+                        
+                        <div class="prodotto-caratteristiche">
+                            <h4>Caratteristiche:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> 100% Naturale</li>
+                                <li><i class="fas fa-check"></i> Produzione Artigianale</li>
+                                <li><i class="fas fa-check"></i> Senza Additivi</li>
+                            </ul>
+                        </div>
+
+                        <div class="prezzo-info">
+                            <span class="prezzo">CHF 12</span>
+                            <span class="peso">/ 500g</span>
+                        </div>
+
+                        <div class="prenotazione-form">
+                            <h4>Prenota il tuo miele</h4>
+                            <p class="solo-ritiro-info">
+                                Il miele è disponibile solo per il ritiro. Non effettuiamo spedizioni.
+                            </p>
+                            <form id="prenotazioneForm" action="https://formspree.io/f/xkgblwak" method="POST" class="prenotazione-form-content">
+                                <div class="form-row form-row-full">
+                                    <div class="form-group">
+                                        <label for="quantita">Quantità (vasetti da 500g):</label>
+                                        <select id="quantita" name="quantita" required>
+                                            <option value="" disabled selected>Seleziona quantità</option>
+                                            <option value="1">1 vasetto</option>
+                                            <option value="2">2 vasetti</option>
+                                            <option value="3">3 vasetti</option>
+                                            <option value="4">4 vasetti</option>
+                                            <option value="5">5 vasetti</option>
+                                            <option value="6">6 vasetti</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="nome-prenotazione">Nome e Cognome:</label>
+                                        <input type="text" id="nome-prenotazione" name="nome" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-prenotazione">Email o Telefono:</label>
+                                        <input type="text" id="email-prenotazione" name="contatto" required>
+                                    </div>
+                                </div>
+                                <div class="form-bottom">
+                                    <span id="prezzo-totale" style="font-weight: bold;"></span>
+                                    <button type="submit" class="prenota-btn">Prenota Ora</button>
+                                </div>
+                            </form>
+<script>
+document.getElementById('prenotazioneForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  const response = await fetch("https://formspree.io/f/xkgblwak", {
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  if (response.ok) {
+    window.location.href = "https://sto.altervista.org/success.html";
+  } else {
+    alert("Errore nell'invio del messaggio. Riprova.");
+  }
+});
+</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chi Siamo Section -->
+        <section id="chi-siamo" class="chi-siamo">
+            <div class="container">
+                <div class="chi-siamo-content">
+                    <div class="chi-siamo-text">
+                        <h2>La Nostra Storia</h2>
+                        <p>Da oltre 30 anni ci dedichiamo con passione all'apicoltura, seguendo i ritmi della natura e rispettando le nostre api. Il nostro miele millefiori viene prodotto artigianalmente, senza additivi o processi industriali, garantendo un prodotto di qualità.</p>
+                        
+                        <div class="valori">
+                            <div class="valore">
+                                <i class="fa-solid fa-tree"></i>
+                                <h4>Millefiori</h4>
+                                <p>Selezione naturale delle piante</p>
+                            </div>
+                            <div class="valore">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <h4>Produzione Locale</h4>
+                                <p>Miele del nostro territorio</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chi-siamo-image">
+                        <img src="images/IMG_7885.JPG" alt="Il nostro apiario" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contatti Section -->
+        <section id="contatti" class="contatti">
+            <div class="container">
+                <h2>Contattaci</h2>
+                <p class="section-subtitle">Per informazioni e ritiro prenotazioni</p>
+            
+                    <div class="contatti-content">
+                        <div class="contatto-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Telefono</h4>
+                                <p>tel-da-definire</p>
+                            </div>
+                        </div>
+                        <div class="contatto-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>indirizzo-da-definire</p>
+                            </div>
+                        </div>
+                        <div class="contatto-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Indirizzo</h4>
+                                <p>Via Campei 5a, 6646 Contra</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/script.js" id="main-js"></script>
+    <!-- Footer -->
+<footer>
+    &copy; 2025 Miele di Contra. Tutti i diritti riservati.
+</footer>
+</div>
+</body>
+</html>
