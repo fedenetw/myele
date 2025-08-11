@@ -170,7 +170,7 @@ body.no-scroll {
     justify-content: center;
     min-height: 100vh; /* Occupa tutta l'altezza dello schermo */
     padding: 4rem 0;
-    background: url('../images/hero-honey.jpg') center center/cover no-repeat;
+    background: url('../images/hero-image.jpg') center center/cover no-repeat;
 }
 
 .hero-content {
@@ -672,13 +672,13 @@ body.no-scroll {
 
 /* Solo Ritiro Info */
 .solo-ritiro-info {
-    color: #b48a00;
+    color: #000000;
     font-weight: 500;
     text-align: left;
     margin-bottom: 1rem;
     opacity: 0.55;
     white-space: normal;
-    font-size: 0.80rem;
+    font-size: 0.85rem;
     background: none;
     padding: 0 px;
     line-height: 1.3;
@@ -795,6 +795,8 @@ body.no-scroll {
         flex-direction: column;
         text-align: center;
         padding: 6rem 1rem 2rem 1rem; /* Aumentato il padding top */
+        background-position: center top; /* oppure: center 30% */
+        /* Puoi anche provare: background-size: cover; */
     }
 
     .hero-content h1 {
@@ -896,4 +898,65 @@ html {
 .submit-btn:focus {
     outline: 2px solid #d4af37;
     outline-offset: 2px;
+}
+
+.quantita-selector {
+    display: flex;
+    align-items: stretch; /* Align items to stretch vertically */
+    gap: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* For Firefox */
+}
+
+#quantita {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem; /* Larger font for visibility */
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 10px;
+    height: 104px; /* Height to match the two 50px buttons + gap */
+    box-sizing: border-box;
+}
+
+#quantita:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.quantita-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Gap between the two buttons */
+}
+
+.quantita-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    touch-action: manipulation;
+}
+
+.quantita-btn:hover {
+    background-color: #e0e0e0;
+    border-color: #ccc;
 }

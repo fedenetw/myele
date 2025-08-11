@@ -44,62 +44,42 @@ window.addEventListener('scroll', () => {
 
 
 
-// Form submission handling for contact form
-const contactForm = document.querySelector('.contatti-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const nome = formData.get('nome');
-        const email = formData.get('email');
-        const telefono = formData.get('telefono');
-        const messaggio = formData.get('messaggio');
-        
-        // Basic validation
-        if (!nome || !email || !messaggio) {
-            alert('Per favore compila tutti i campi obbligatori.');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Per favore inserisci un indirizzo email valido.');
-            return;
-        }
-        
-        // Create email content
-        const emailSubject = 'Nuovo Messaggio dal Sito Web';
-        const emailBody = `
-Nuovo messaggio ricevuto:
+// Form validation for the booking form
+document.addEventListener('DOMContentLoaded', function() {
+    const prenotazioneForm = document.getElementById('prenotazioneForm');
+    if (prenotazioneForm) {
+        prenotazioneForm.addEventListener('submit', function(e) {
+            const contattoInput = document.getElementById('email-prenotazione');
+            const contattoValue = contattoInput.value.trim();
 
-NOME: ${nome}
-EMAIL: ${email}
-TELEFONO: ${telefono || 'Non fornito'}
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9\s\-\( \)\+]+$/;
 
-MESSAGGIO:
-${messaggio}
+            // If it's empty, let the 'required' attribute handle it
+            if (contattoValue === '') {
+                return;
+            }
 
----
-Messaggio inviato dal sito web.
-        `;
-        
-        // Create mailto link
-        const mailtoLink = `mailto:mariorossi.mr.rossi@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-        
-        // Show confirmation and open email client
-        const conferma = confirm('Messaggio preparato!\n\nVuoi aprire il client email per inviare il messaggio?');
-        
-        if (conferma) {
-            window.open(mailtoLink);
-        }
-        
-        // Reset form
-        this.reset();
-    });
-}
+            // If it contains letters, it MUST be a valid email
+            if (/[a-zA-Z]/.test(contattoValue)) {
+                if (!emailRegex.test(contattoValue)) {
+                    e.preventDefault();
+                    contattoInput.focus();
+                    return;
+                }
+            }
+            // If it does NOT contain letters, it must be a valid phone number
+            else if (!phoneRegex.test(contattoValue)) {
+                e.preventDefault();
+                alert('Il numero di telefono inserito non è valido. Usa solo numeri e caratteri come "+", "-", "(", ")".');
+                contattoInput.focus();
+                return;
+            }
+            // If validation passes, the form will submit
+        });
+    }
+});
+
 
 // Intersection Observer for animations
 const observerOptions = {
@@ -304,11 +284,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     const prezzoSingolo = 12;
-    const selectQuantita = document.getElementById('quantita');
+    const quantitaInput = document.getElementById('quantita');
     const prezzoTotale = document.getElementById('prezzo-totale');
+    const btnPlus = document.getElementById('incrementa-quantita');
+    const btnMinus = document.getElementById('decrementa-quantita');
 
     function aggiornaTotale() {
-        const quantita = parseInt(selectQuantita.value, 10);
+        const quantita = parseInt(quantitaInput.value, 10);
         if (!isNaN(quantita) && quantita > 0) {
             prezzoTotale.textContent = `Totale: CHF ${prezzoSingolo * quantita}`;
         } else {
@@ -316,10 +298,75 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    if (selectQuantita) {
-        selectQuantita.addEventListener('change', aggiornaTotale);
+    if (btnPlus && btnMinus && quantitaInput) {
+        btnPlus.addEventListener('click', () => {
+            quantitaInput.value = parseInt(quantitaInput.value, 10) + 1;
+            aggiornaTotale();
+        });
+        btnMinus.addEventListener('click', () => {
+            if (parseInt(quantitaInput.value, 10) > 1) {
+                quantitaInput.value = parseInt(quantitaInput.value, 10) - 1;
+                aggiornaTotale();
+            }
+        });
+        aggiornaTotale();
     }
-    aggiornaTotale();
 });
 
 console.log('Miele Artigianale - Sito web caricato con successo! 🍯');
+
+// Form validation for the booking form
+document.addEventListener('DOMContentLoaded', function() {
+    const prenotazioneForm = document.getElementById('prenotazioneForm');
+    if (prenotazioneForm) {
+        const contattoInput = document.getElementById('email-prenotazione');
+        const errorSpan = document.getElementById('contatto-error');
+        const honeypotInput = document.getElementById('honeypot');
+
+        prenotazioneForm.addEventListener('submit', function(e) {
+            // 1. Honeypot check
+            if (honeypotInput.value.trim() !== '') {
+                console.log('Bot detected!');
+                e.preventDefault(); // Silently prevent submission
+                return;
+            }
+
+            // 2. User-facing validation
+            const contattoValue = contattoInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9\s\-\\(\)\+]+$/;
+
+            errorSpan.textContent = ''; // Clear previous errors
+
+            if (contattoValue === '') {
+                errorSpan.textContent = 'Questo campo è obbligatorio.';
+                e.preventDefault();
+                contattoInput.focus();
+                return;
+            }
+
+            if (/[a-zA-Z]/.test(contattoValue)) {
+                if (!emailRegex.test(contattoValue)) {
+                    e.preventDefault();
+                    errorSpan.textContent = 'L\'indirizzo email non è valido.';
+                    contattoInput.focus();
+                    return;
+                }
+            } else {
+                if (!phoneRegex.test(contattoValue)) {
+                    e.preventDefault();
+                    errorSpan.textContent = 'Il numero di telefono non è valido.';
+                    contattoInput.focus();
+                    return;
+                }
+            }
+        });
+
+        // Clear the error message as the user types
+        contattoInput.addEventListener('input', () => {
+            if (errorSpan.textContent !== '') {
+                errorSpan.textContent = '';
+            }
+        });
+    }
+});

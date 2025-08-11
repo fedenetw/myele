@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Usa FILTER_SANITIZE_FULL_SPECIAL_CHARS per una migliore sanificazione
     $quantita = filter_input(INPUT_POST, 'quantita', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $contatto_cliente_input = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $contatto_cliente_input = filter_input(INPUT_POST, 'contatto', FILTER_SANITIZE_EMAIL);
 
     // 2. Validazione dei dati
     if (empty($quantita) || empty($nome) || empty($contatto_cliente_input)) {
