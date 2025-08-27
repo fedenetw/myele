@@ -370,3 +370,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('prenotazioneForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Permetti l'invio del form
+            setTimeout(function() {
+                window.location.href = 'success.html';
+            }, 100); // Attendi brevemente per invio dati
+        });
+    }
+});
