@@ -324,19 +324,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const honeypotInput = document.getElementById('honeypot');
 
         prenotazioneForm.addEventListener('submit', function(e) {
-            // 1. Honeypot check
+            // Honeypot check
             if (honeypotInput.value.trim() !== '') {
-                console.log('Bot detected!');
-                e.preventDefault(); // Silently prevent submission
+                e.preventDefault();
                 return;
             }
 
-            // 2. User-facing validation
+            // Validazione email/telefono
             const contattoValue = contattoInput.value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const phoneRegex = /^[0-9\s\-\\(\)\+]+$/;
 
-            errorSpan.textContent = ''; // Clear previous errors
+            errorSpan.textContent = '';
 
             if (contattoValue === '') {
                 errorSpan.textContent = 'Questo campo è obbligatorio.';
@@ -347,38 +346,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (/[a-zA-Z]/.test(contattoValue)) {
                 if (!emailRegex.test(contattoValue)) {
-                    e.preventDefault();
                     errorSpan.textContent = 'L\'indirizzo email non è valido.';
+                    e.preventDefault();
                     contattoInput.focus();
                     return;
                 }
             } else {
                 if (!phoneRegex.test(contattoValue)) {
-                    e.preventDefault();
                     errorSpan.textContent = 'Il numero di telefono non è valido.';
+                    e.preventDefault();
                     contattoInput.focus();
                     return;
                 }
             }
+
+            // Se tutto è valido, lascia inviare e reindirizza dopo breve delay
+            setTimeout(function() {
+                window.location.href = 'success.html';
+            }, 100);
         });
 
-        // Clear the error message as the user types
+        // Clear error on input
         contattoInput.addEventListener('input', () => {
             if (errorSpan.textContent !== '') {
                 errorSpan.textContent = '';
             }
-        });
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('prenotazioneForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // Permetti l'invio del form
-            setTimeout(function() {
-                window.location.href = 'success.html';
-            }, 100); // Attendi brevemente per invio dati
         });
     }
 });
